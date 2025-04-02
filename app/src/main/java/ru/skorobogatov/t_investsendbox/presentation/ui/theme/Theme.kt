@@ -1,4 +1,4 @@
-package ru.skorobogatov.t_investsendbox.ui.theme
+package ru.skorobogatov.t_investsendbox.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -50,7 +50,7 @@ androidComponents {
     )
     onVariants { variant ->
         variant.buildConfigFields.put(
-            "T-invest Sendbox token",
+            "T_INVEST_SENDBOX_TOKEN",
             BuildConfigField("String", "\"$key\"", "Token for T-invest API")
         )
     }
