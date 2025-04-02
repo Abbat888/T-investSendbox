@@ -1,7 +1,11 @@
+import com.android.build.api.variant.BuildConfigField
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.parcelize)
 }
 
 android {
@@ -36,6 +40,19 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+}
+
+androidComponents {
+    val key = property("token")?.toString() ?: error(
+        "You should add token in gradle.properties"
+    )
+    onVariants { variant ->
+        variant.buildConfigFields.put(
+            "T-invest Sendbox token",
+            BuildConfigField("String", "\"$key\"", "Token for T-invest API")
+        )
     }
 }
 
@@ -50,6 +67,25 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     testImplementation(libs.junit)
+
+    implementation(libs.mvikotlin.core)
+    implementation(libs.mvikotlin.main)
+    implementation(libs.mvikotlin.coroutine)
+
+    implementation(libs.decompose.core)
+    implementation(libs.decompose.compose)
+
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+
+    implementation(libs.dagger2.core)
+    ksp(libs.dagger2.compiler)
+
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter)
+
+    implementation(libs.glide.compose)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
