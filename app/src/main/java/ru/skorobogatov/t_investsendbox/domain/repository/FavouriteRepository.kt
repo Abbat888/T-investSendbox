@@ -5,7 +5,7 @@ import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 
 interface FavouriteRepository {
 
-    val favouriteInstrument: Flow<Instrument>
+    val favouriteInstrument: Flow<List<Instrument>>
 
     fun observeIsFavourite(figi: String): Flow<Boolean>
 

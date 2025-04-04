@@ -4,5 +4,5 @@ import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 
 interface SearchRepository {
 
-    suspend fun search(query: String): List<Instrument>
+    suspend fun search(query: String): List<String>
 }
