@@ -19,7 +19,7 @@ fun InstrumentDto.toEntity(): Instrument = Instrument(
     first1dayCandleDate = first1dayCandleDate.toCalendar()
 )
 
-fun String.toBrandUrl(): String = this.removeSuffix(".png")
+private fun String.toBrandUrl(): String = this.removeSuffix(".png")
     .map { "https://invest-brands.cdn-tinkoff.ru/${it}x320.png" }.toString()
 
 fun String.toCalendar(): Calendar{

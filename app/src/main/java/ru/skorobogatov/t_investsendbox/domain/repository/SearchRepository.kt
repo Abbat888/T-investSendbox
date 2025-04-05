@@ -5,4 +5,6 @@ import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 interface SearchRepository {
 
     suspend fun search(query: String): List<String>
+
+    suspend fun getInstrumentInfo(figi: String): Instrument
 }

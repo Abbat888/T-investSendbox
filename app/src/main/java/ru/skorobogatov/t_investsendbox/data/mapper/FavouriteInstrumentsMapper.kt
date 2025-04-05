@@ -28,4 +28,4 @@ fun InstrumentDbModel.toEntity(): Instrument = Instrument(
 
 fun List<InstrumentDbModel>.toEntities(): List<Instrument> = this.map { it.toEntity() }
 
-fun Long.toCalendar(): Calendar = Calendar.getInstance().also { it.timeInMillis = this }
+private fun Long.toCalendar(): Calendar = Calendar.getInstance().also { it.timeInMillis = this }
