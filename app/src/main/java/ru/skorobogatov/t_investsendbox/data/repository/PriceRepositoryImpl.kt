@@ -21,9 +21,11 @@ class PriceRepositoryImpl @Inject constructor(
         val instrumentIds = StringBuilder().also {
             figiList.forEachIndexed { index, figi ->
                 if (index == 0) {
-                    it.append("\"$figi\"")
-                } else {
+                    it.append("\"$figi\",")
+                } else if (index == figiList.lastIndex) {
                     it.appendLine("\"$figi\"")
+                } else {
+                    it.appendLine("\"$figi\",")
                 }
             }
         }

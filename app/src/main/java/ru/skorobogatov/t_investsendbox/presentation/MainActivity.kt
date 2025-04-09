@@ -8,7 +8,6 @@ import com.arkivanov.decompose.defaultComponentContext
 import ru.skorobogatov.t_investsendbox.TInvestSendBoxApp
 import ru.skorobogatov.t_investsendbox.presentation.root.DefaultRootComponent
 import ru.skorobogatov.t_investsendbox.presentation.root.RootContent
-import ru.skorobogatov.t_investsendbox.presentation.ui.theme.TinvestSendboxTheme
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
@@ -20,6 +19,7 @@ class MainActivity : ComponentActivity() {
         (applicationContext as TInvestSendBoxApp).applicationComponent.inject(this)
 
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContent {
             RootContent(component = rootComponentFactory.create(defaultComponentContext()))

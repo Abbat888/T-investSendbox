@@ -5,6 +5,7 @@ import com.arkivanov.mvikotlin.core.store.Store
 import com.arkivanov.mvikotlin.core.store.StoreFactory
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineBootstrapper
 import com.arkivanov.mvikotlin.extensions.coroutines.CoroutineExecutor
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 import ru.skorobogatov.t_investsendbox.domain.entity.LastPrice

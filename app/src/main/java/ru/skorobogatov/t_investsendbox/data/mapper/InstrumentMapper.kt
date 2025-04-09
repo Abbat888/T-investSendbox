@@ -19,17 +19,19 @@ fun InstrumentDto.toEntity(): Instrument = Instrument(
     first1dayCandleDate = first1dayCandleDate.toCalendar()
 )
 
-private fun String.toBrandUrl(): String = this.removeSuffix(".png")
-    .map { "https://invest-brands.cdn-tinkoff.ru/${it}x320.png" }.toString()
+private fun String.toBrandUrl(): String {
+    val logoName = this.removeSuffix(".png")
+    return "https://invest-brands.cdn-tinkoff.ru/${logoName}x320.png"
+}
 
 fun String.toCalendar(): Calendar{
     val date = Calendar.getInstance()
     if (this.length > 20){
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.UK)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.UK)
         val time = simpleDateFormat.parse(this)?.time
         date.timeInMillis = time ?: date.timeInMillis
     } else {
-        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.UK)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.UK)
         val time = simpleDateFormat.parse(this)?.time
         date.timeInMillis = time ?: date.timeInMillis
     }
@@ -37,6 +39,6 @@ fun String.toCalendar(): Calendar{
 }
 
 fun Calendar.toStringFormat(): String{
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.UK)
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.UK)
     return simpleDateFormat.format(this.time)
 }
