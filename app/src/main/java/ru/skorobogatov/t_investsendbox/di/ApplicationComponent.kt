@@ -3,6 +3,7 @@ package ru.skorobogatov.t_investsendbox.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
+import ru.skorobogatov.t_investsendbox.presentation.MainActivity
 
 @ApplicationScope
 @Component(
@@ -12,6 +13,8 @@ import dagger.Component
     ]
 )
 interface ApplicationComponent {
+
+    fun inject(activity: MainActivity)
 
     @Component.Factory
     interface Factory {

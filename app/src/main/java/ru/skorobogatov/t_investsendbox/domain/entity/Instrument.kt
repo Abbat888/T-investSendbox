@@ -1,7 +1,10 @@
 package ru.skorobogatov.t_investsendbox.domain.entity
 
 import android.icu.util.Calendar
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Instrument(
     val figi: String,
     val name: String,
@@ -11,4 +14,4 @@ data class Instrument(
     val instrumentKind: String,
     val first1minCandleDate: Calendar,
     val first1dayCandleDate: Calendar
-)
+): Parcelable
