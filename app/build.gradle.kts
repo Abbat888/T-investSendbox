@@ -86,6 +86,8 @@ dependencies {
 
     implementation(libs.glide.compose)
 
+    implementation(libs.icons)
+
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

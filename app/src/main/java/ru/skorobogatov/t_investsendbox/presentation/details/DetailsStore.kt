@@ -103,14 +103,14 @@ class DetailsStoreFactory @Inject constructor(
                 candlesState = State.CandlesState.Initial,
                 timeframeState = State.TimeframeState.SelectedTimeframe(Timeframe.CANDLE_INTERVAL_30_MIN),
                 periodState = State.PeriodState.SelectedPeriod(
-                    from = Calendar.getInstance().timeInMillis - 86400000,
-                    to = Calendar.getInstance().timeInMillis - (86400000 * 3)
+                    from = Calendar.getInstance().timeInMillis - (86400000 * 3),
+                    to = Calendar.getInstance().timeInMillis - 86400000
                 )
             ),
             bootstrapper = BootstrapperImpl(
                 instrument = instrument,
-                from = Calendar.getInstance().timeInMillis - 86400000,
-                to = Calendar.getInstance().timeInMillis - (86400000 * 3),
+                from = Calendar.getInstance().timeInMillis - (86400000 * 3),
+                to = Calendar.getInstance().timeInMillis - 86400000,
                 timeframe = Timeframe.CANDLE_INTERVAL_30_MIN
             ),
             executorFactory = ::ExecutorImpl,

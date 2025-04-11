@@ -192,8 +192,6 @@ class SearchStoreFactory @Inject constructor(
                             } catch (e: Exception) {
                                 dispatch(Msg.InstrumentItemsError)
                             }
-
-
                         } catch (e: Exception) {
                             dispatch(Msg.SearchResultError)
                         }

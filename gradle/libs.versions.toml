@@ -51,6 +51,8 @@ retrofit-converter={group="com.squareup.retrofit2",name="converter-gson",version
 
 glide-compose={group="com.github.bumptech.glide",name="compose",version.ref="glide"}
 
+icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
