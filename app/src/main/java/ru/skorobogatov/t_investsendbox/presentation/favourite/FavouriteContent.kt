@@ -37,7 +37,6 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 import ru.skorobogatov.t_investsendbox.domain.entity.InstrumentType
-import ru.skorobogatov.t_investsendbox.presentation.search.SearchStore
 
 @Composable
 fun FavouriteContent(
