@@ -214,10 +214,44 @@ class DetailsStoreFactory @Inject constructor(
 
                 is Intent.PeriodChanged -> {
                     dispatch(Msg.PeriodChanged(intent.from, intent.to))
+                    val state = state()
+                    val timeframeState = state.timeframeState as State.TimeframeState.SelectedTimeframe
+                    dispatch(Msg.CandlesStartLoading)
+                    scope.launch {
+                        try {
+                            val candleList = getCandlesUseCase(
+                                figi = state.instrument.figi,
+                                from = Calendar.getInstance().also { it.timeInMillis = intent.from},
+                                to = Calendar.getInstance().also { it.timeInMillis = intent.to },
+                                interval = timeframeState.timeframe.name,
+                                limit = 300 //TODO()
+                            )
+                            dispatch(Msg.CandlesLoaded(candleList))
+                        } catch (e: Exception) {
+                            dispatch(Msg.CandlesLoadingError)
+                        }
+                    }
                 }
 
                 is Intent.TimeframeChanged -> {
                     dispatch(Msg.TimeframeChanged(intent.timeframe))
+                    val state = state()
+                    val periodState = state.periodState as State.PeriodState.SelectedPeriod
+                    dispatch(Msg.CandlesStartLoading)
+                    scope.launch {
+                        try {
+                            val candleList = getCandlesUseCase(
+                                figi = state.instrument.figi,
+                                from = Calendar.getInstance().also { it.timeInMillis = periodState.from},
+                                to = Calendar.getInstance().also { it.timeInMillis = periodState.to },
+                                interval = intent.timeframe.name,
+                                limit = 300 //TODO()
+                            )
+                            dispatch(Msg.CandlesLoaded(candleList))
+                        } catch (e: Exception) {
+                            dispatch(Msg.CandlesLoadingError)
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,7 @@
 package ru.skorobogatov.t_investsendbox.presentation.details
 
+import android.annotation.SuppressLint
+import android.icu.util.Calendar
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -54,6 +56,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.skorobogatov.t_investsendbox.domain.entity.Candle
 import ru.skorobogatov.t_investsendbox.domain.entity.Timeframe
+import java.text.DateFormatSymbols
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -111,29 +115,7 @@ fun DetailsContent(
             )
         }
     ) { paddingValues ->
-        when (val candleState = state.candlesState) {
-            DetailsStore.State.CandlesState.Error -> {
-                Text(
-                    modifier = Modifier.padding(paddingValues),
-                    text = "Error"
-                )
-            }
-
-            DetailsStore.State.CandlesState.Initial -> {
-
-            }
-
-            is DetailsStore.State.CandlesState.Loaded -> {
-                Terminal(
-                    candleList = candleState.candlesList.reversed()
-                )
-            }
-
-            DetailsStore.State.CandlesState.Loading -> {
-
-            }
-        }
-        when(state.timeframeState){
+        when (state.timeframeState) {
             DetailsStore.State.TimeframeState.OnChange -> {
                 expend = true
                 DropdownMenu(
@@ -142,7 +124,7 @@ fun DetailsContent(
                     modifier = Modifier
                 ) {
                     Timeframe.entries.forEachIndexed { index, timeFrame ->
-                        if (index != 0){
+                        if (index != 0) {
                             DropdownMenuItem(
                                 text = { Text(text = timeFrame.name.removePrefix("CANDLE_INTERVAL_")) },
                                 onClick = {
@@ -154,54 +136,81 @@ fun DetailsContent(
                     }
                 }
             }
+
             is DetailsStore.State.TimeframeState.SelectedTimeframe -> {
-
-            }
-        }
-        when(state.periodState){
-            DetailsStore.State.PeriodState.OnChange -> {
-                openDialog = true
-                DatePickerDialog(
-                    onDismissRequest = { openDialog = false },
-                    confirmButton = {
-                        TextButton(
-                            onClick = {
-                                val from = dateRangePickerState.selectedStartDateMillis
-                                val to = dateRangePickerState.selectedEndDateMillis
-                                if (from != null && to != null){
-                                    component.onPeriodChanged(
-                                        from = from,
-                                        to = to
-                                    )
-                                }
-                                openDialog = false
+                when (state.periodState) {
+                    DetailsStore.State.PeriodState.OnChange -> {
+                        openDialog = true
+                        DatePickerDialog(
+                            onDismissRequest = { openDialog = false },
+                            confirmButton = {
+                                TextButton(
+                                    onClick = {
+                                        val from = dateRangePickerState.selectedStartDateMillis
+                                        val to = dateRangePickerState.selectedEndDateMillis
+                                        if (from != null && to != null) {
+                                            component.onPeriodChanged(
+                                                from = from,
+                                                to = to
+                                            )
+                                        }
+                                        openDialog = false
+                                    }
+                                ) { Text(text = "Применить") }
+                            },
+                            dismissButton = {
+                                TextButton(
+                                    onClick = {
+                                        openDialog = false
+                                    }
+                                ) { Text(text = "Отмена") }
                             }
-                        ) { Text(text = "Применить") }
-                    },
-                    dismissButton = {
-                        TextButton(
-                            onClick = {
-                                openDialog = false
-                            }
-                        ) { Text(text = "Отмена") }
+                        ) {
+                            DateRangePicker(
+                                state = dateRangePickerState,
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
                     }
-                ) {
-                    DateRangePicker(
-                        state = dateRangePickerState,
-                        modifier = Modifier.weight(1f)
-                    )
-                }
-            }
-            is DetailsStore.State.PeriodState.SelectedPeriod -> {
 
+                    is DetailsStore.State.PeriodState.SelectedPeriod -> {
+                        when (val candleState = state.candlesState) {
+                            DetailsStore.State.CandlesState.Error -> {
+                                Text(
+                                    modifier = Modifier.padding(paddingValues),
+                                    text = "Error"
+                                )
+                            }
+
+                            DetailsStore.State.CandlesState.Initial -> {
+
+                            }
+
+                            is DetailsStore.State.CandlesState.Loaded -> {
+                                val timeframe =
+                                    state.timeframeState as DetailsStore.State.TimeframeState.SelectedTimeframe
+                                Terminal(
+                                    candleList = candleState.candlesList.reversed(),
+                                    timeframe = timeframe.timeframe
+                                )
+                            }
+
+                            DetailsStore.State.CandlesState.Loading -> {
+
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
+@SuppressLint("DefaultLocale")
 @Composable
 fun Terminal(
-    candleList: List<Candle>
+    candleList: List<Candle>,
+    timeframe: Timeframe
 ) {
     val listState = rememberLazyListState()
     var scale by remember { mutableStateOf(1f) }
@@ -232,7 +241,7 @@ fun Terminal(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -285,11 +294,110 @@ fun Terminal(
                                 ),
                                 strokeWidth = 16f * scale
                             )
+                            val candleTime = it.time
+                            val minutes = candleTime.get(Calendar.MINUTE)
+                            val hours = candleTime.get(Calendar.HOUR_OF_DAY)
+                            val dayOfWeek = candleTime.get(Calendar.DAY_OF_WEEK)
+                            val dayOfMonth = candleTime.get(Calendar.DAY_OF_MONTH)
+                            val month = candleTime.get(Calendar.MONTH)
+                            val year = candleTime.get(Calendar.YEAR)
+                            val nameOfMonth =
+                                DateFormatSymbols(Locale.getDefault()).shortMonths[month]
+                            var text = ""
+                            val shouldDrawDelimiter = when (timeframe) {
+                                Timeframe.CANDLE_INTERVAL_1_MIN,
+                                Timeframe.CANDLE_INTERVAL_2_MIN,
+                                Timeframe.CANDLE_INTERVAL_3_MIN,
+                                Timeframe.CANDLE_INTERVAL_5_MIN -> {
+                                    text = if (hours == 0) {
+                                        String.format("%02d %s", dayOfMonth, nameOfMonth)
+                                    } else {
+                                        String.format("%02d:00", hours)
+                                    }
+                                    minutes == 0 && hours.rem(2) == 0
+                                }
+
+                                Timeframe.CANDLE_INTERVAL_15_MIN,
+                                Timeframe.CANDLE_INTERVAL_10_MIN,
+                                Timeframe.CANDLE_INTERVAL_30_MIN -> {
+                                    text = if (hours == 0) {
+                                        String.format("%02d %s", dayOfMonth, nameOfMonth)
+                                    } else {
+                                        String.format("%02d:00", hours)
+                                    }
+                                    minutes == 0 && hours.rem(4) == 0
+                                }
+
+                                Timeframe.CANDLE_INTERVAL_HOUR,
+                                Timeframe.CANDLE_INTERVAL_2_HOUR,
+                                Timeframe.CANDLE_INTERVAL_4_HOUR -> {
+                                    text = if (dayOfMonth == 1) {
+                                        String.format("%02d %s", dayOfMonth, nameOfMonth)
+                                    } else {
+                                        String.format("%02d", dayOfMonth)
+                                    }
+                                    hours == 0 && dayOfMonth.rem(2) == 0
+                                }
+
+                                Timeframe.CANDLE_INTERVAL_DAY -> {
+                                    text = if (dayOfMonth == 1) {
+                                        String.format("%02d %s", dayOfMonth, nameOfMonth)
+                                    } else {
+                                        String.format("%02d", dayOfMonth)
+                                    }
+                                    dayOfWeek == 1
+                                }
+
+                                Timeframe.CANDLE_INTERVAL_WEEK -> {
+                                    text = if (month == 1) {
+                                        String.format("%d %s", year, nameOfMonth)
+                                    } else {
+                                        String.format("%s", nameOfMonth)
+                                    }
+                                    month.rem(2) == 0
+                                }
+
+                                Timeframe.CANDLE_INTERVAL_MONTH -> {
+                                    text = if (month == 1) {
+                                        String.format("%d %s", year, nameOfMonth)
+                                    } else {
+                                        String.format("%s", nameOfMonth)
+                                    }
+                                    month.rem(6) == 0
+                                }
+                            }
+                            if (shouldDrawDelimiter) {
+                                drawLine(
+                                    color = Color.White.copy(alpha = 0.5f),
+                                    start = Offset(size.center.x, 0f),
+                                    end = Offset(size.center.x, size.height),
+                                    strokeWidth = 1f,
+                                    pathEffect = PathEffect.dashPathEffect(
+                                        floatArrayOf(
+                                            4.dp.toPx(),
+                                            4.dp.toPx()
+                                        )
+                                    )
+                                )
+                                val textLayoutResult = textMeasurer.measure(
+                                    text = text,
+                                    style = TextStyle(
+                                        color = Color.White,
+                                        fontSize = 12.sp
+                                    )
+                                )
+                                drawText(
+                                    textLayoutResult = textLayoutResult,
+                                    topLeft = Offset(
+                                        size.center.x - (textLayoutResult.size.width / 2),
+                                        size.height
+                                    )
+                                )
+                            }
                         }
                     }
                 }
             }
-
         }
         Canvas(
             modifier = Modifier
@@ -297,7 +405,8 @@ fun Terminal(
                 .clipToBounds()
                 .padding(top = 128.dp, bottom = 48.dp)
         ) {
-            val lastPrice = if (candleList.first().open > candleList.first().close) candleList.first().open else candleList.first().close
+            val lastPrice =
+                if (candleList.first().open > candleList.first().close) candleList.first().open else candleList.first().close
             drawPrices(
                 max = maxPrice,
                 min = minPrice,

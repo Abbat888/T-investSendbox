@@ -2,7 +2,6 @@ package ru.skorobogatov.t_investsendbox.domain.entity
 
 enum class Timeframe(name: String) {
 
-    CANDLE_INTERVAL_UNSPECIFIED(name = "CANDLE_INTERVAL_UNSPECIFIED"),
     CANDLE_INTERVAL_1_MIN(name = "CANDLE_INTERVAL_1_MIN"),
     CANDLE_INTERVAL_2_MIN(name = "CANDLE_INTERVAL_2_MIN"),
     CANDLE_INTERVAL_3_MIN(name = "CANDLE_INTERVAL_3_MIN"),
