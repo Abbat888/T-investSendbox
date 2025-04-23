@@ -8,14 +8,15 @@ espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.03.01"
-mvikotlin="4.3.0"
-decompose="3.2.2"
-room="2.6.1"
-ksp="2.1.10-1.0.29"
-dagger2="2.55"
-retrofit="2.11.0"
-parcelize="2.1.10"
-glide="1.0.0-beta01"
+mvikotlin = "4.3.0"
+decompose = "3.2.2"
+room = "2.6.1"
+ksp = "2.1.10-1.0.29"
+dagger2 = "2.55"
+retrofit = "2.11.0"
+parcelize = "2.1.10"
+glide = "1.0.0-beta01"
+datastore = "1.1.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,25 +34,27 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
-mvikotlin-core={group="com.arkivanov.mvikotlin",name="mvikotlin",version.ref="mvikotlin"}
-mvikotlin-main={group="com.arkivanov.mvikotlin",name="mvikotlin-main",version.ref="mvikotlin"}
-mvikotlin-coroutine={group="com.arkivanov.mvikotlin",name="mvikotlin-extensions-coroutines",version.ref="mvikotlin"}
+mvikotlin-core = { group = "com.arkivanov.mvikotlin", name = "mvikotlin", version.ref = "mvikotlin" }
+mvikotlin-main = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-main", version.ref = "mvikotlin" }
+mvikotlin-coroutine = { group = "com.arkivanov.mvikotlin", name = "mvikotlin-extensions-coroutines", version.ref = "mvikotlin" }
 
-decompose-core={group="com.arkivanov.decompose",name="decompose",version.ref="decompose"}
-decompose-compose={group="com.arkivanov.decompose",name="extensions-compose",version.ref="decompose"}
+decompose-core = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose" }
 
-room-ktx={group="androidx.room",name="room-ktx",version.ref="room"}
-room-compiler={group="androidx.room",name="room-compiler",version.ref="room"}
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
-dagger2-core={group="com.google.dagger",name="dagger",version.ref="dagger2"}
-dagger2-compiler={group="com.google.dagger",name="dagger-compiler",version.ref="dagger2"}
+dagger2-core = { group = "com.google.dagger", name = "dagger", version.ref = "dagger2" }
+dagger2-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger2" }
 
-retrofit-core={group="com.squareup.retrofit2",name="retrofit",version.ref="retrofit"}
-retrofit-converter={group="com.squareup.retrofit2",name="converter-gson",version.ref="retrofit"}
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
-glide-compose={group="com.github.bumptech.glide",name="compose",version.ref="glide"}
+glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
 
 icons = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

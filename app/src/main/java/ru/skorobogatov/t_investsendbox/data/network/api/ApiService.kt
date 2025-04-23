@@ -1,6 +1,7 @@
 package ru.skorobogatov.t_investsendbox.data.network.api
 
 import okhttp3.RequestBody
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import ru.skorobogatov.t_investsendbox.data.network.dto.CandlesShellDto
@@ -24,7 +25,6 @@ interface ApiService {
     suspend fun searchInstrument(
         @Body body: RequestBody
     ): SearchedInstrumentsShellDto
-
 
     @POST("tinkoff.public.invest.api.contract.v1.MarketDataService/GetCandles")
     suspend fun getCandles(

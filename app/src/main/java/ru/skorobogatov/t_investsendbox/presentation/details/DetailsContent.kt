@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.filled.Timelapse
@@ -102,7 +103,7 @@ fun DetailsContent(
                         onClick = { component.onClickBack() }
                     ) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.Default.ArrowBackIosNew,
                             contentDescription = null
                         )
                     }
@@ -341,7 +342,7 @@ fun Terminal(
                                 strokeWidth = 16f * scale
                             )
 
-                            DrawTimeDelimiter(
+                            drawTimeDelimiter(
                                 candle = item,
                                 nextCandle = nextCandle,
                                 timeframeState = timeframeState,
@@ -359,7 +360,8 @@ fun Terminal(
                 .padding(top = 128.dp, bottom = 48.dp)
         ) {
             val lastPrice = if (candleList.isNotEmpty()) {
-                if (candleList.first().open > candleList.first().close) candleList.first().open else candleList.first().close
+                if (candleList.first().open > candleList.first().close) candleList.first().open
+                else candleList.first().close
             } else 0f
             drawPrices(
                 max = maxPrice,
@@ -373,7 +375,7 @@ fun Terminal(
 }
 
 @SuppressLint("DefaultLocale")
-private fun DrawScope.DrawTimeDelimiter(
+private fun DrawScope.drawTimeDelimiter(
     candle: Candle,
     nextCandle: Candle?,
     timeframeState: DetailsStore.State.TimeframeState,
@@ -430,7 +432,7 @@ private fun DrawScope.DrawTimeDelimiter(
                 }
 
                 Timeframe.CANDLE_INTERVAL_DAY -> {
-                    text = if (year != nextYear && nextYear != null){
+                    text = if (year != nextYear && nextYear != null) {
                         String.format("%02d %s %d", dayOfMonth, nameOfMonth, year)
                     } else {
                         String.format("%02d %s", dayOfMonth, nameOfMonth)
@@ -448,7 +450,7 @@ private fun DrawScope.DrawTimeDelimiter(
                 }
 
                 Timeframe.CANDLE_INTERVAL_MONTH -> {
-                    text = String.format("%d", year, )
+                    text = String.format("%d", year)
                     year != nextYear
                 }
             }

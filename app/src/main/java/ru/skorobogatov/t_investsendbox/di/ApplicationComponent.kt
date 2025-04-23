@@ -9,7 +9,8 @@ import ru.skorobogatov.t_investsendbox.presentation.MainActivity
 @Component(
     modules = [
         DataModule::class,
-        PresentationModule::class
+        PresentationModule::class,
+        TokenModule::class
     ]
 )
 interface ApplicationComponent {

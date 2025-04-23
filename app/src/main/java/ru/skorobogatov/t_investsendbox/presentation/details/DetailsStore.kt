@@ -175,7 +175,7 @@ class DetailsStoreFactory @Inject constructor(
                         from = fromCalendar,
                         to = toCalendar,
                         interval = timeframe.name,
-                        limit = getLimit(timeframe)
+                        limit = timeframe.limit
                     )
                     dispatch(Action.CandlesLoaded(candleList))
                 } catch (e: Exception) {
@@ -224,7 +224,7 @@ class DetailsStoreFactory @Inject constructor(
                                 from = Calendar.getInstance().also { it.timeInMillis = intent.from},
                                 to = Calendar.getInstance().also { it.timeInMillis = intent.to },
                                 interval = timeframeState.timeframe.name,
-                                limit = getLimit(timeframeState.timeframe)
+                                limit = timeframeState.timeframe.limit
                             )
                             dispatch(Msg.CandlesLoaded(candleList))
                         } catch (e: Exception) {
@@ -245,7 +245,7 @@ class DetailsStoreFactory @Inject constructor(
                                 from = Calendar.getInstance().also { it.timeInMillis = periodState.from},
                                 to = Calendar.getInstance().also { it.timeInMillis = periodState.to },
                                 interval = intent.timeframe.name,
-                                limit = getLimit(intent.timeframe)
+                                limit = intent.timeframe.limit
                             )
                             dispatch(Msg.CandlesLoaded(candleList))
                         } catch (e: Exception) {
