@@ -11,4 +11,8 @@ class TokenRepositoryImpl @Inject constructor(
     override suspend fun saveToken(token: String) {
         tokenInterface.saveToken(token)
     }
+
+    override suspend fun checkToken(): Boolean {
+        return tokenInterface.checkToken()
+    }
 }

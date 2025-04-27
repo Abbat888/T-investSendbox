@@ -17,8 +17,10 @@ import ru.skorobogatov.t_investsendbox.domain.entity.Instrument
 import ru.skorobogatov.t_investsendbox.presentation.details.DefaultDetailsComponent
 import ru.skorobogatov.t_investsendbox.presentation.favourite.DefaultFavouriteComponent
 import ru.skorobogatov.t_investsendbox.presentation.search.DefaultSearchComponent
+import ru.skorobogatov.t_investsendbox.presentation.start.DefaultStartComponent
 
 class DefaultRootComponent @AssistedInject constructor(
+    private val startFactory: DefaultStartComponent.Factory,
     private val favouriteFactory: DefaultFavouriteComponent.Factory,
     private val detailsFactory: DefaultDetailsComponent.Factory,
     private val searchFactory: DefaultSearchComponent.Factory,
@@ -30,7 +32,7 @@ class DefaultRootComponent @AssistedInject constructor(
     override val stack: Value<ChildStack<*, RootComponent.Child>> = childStack(
         source = navigation,
         serializer = null,
-        initialConfiguration = Config.Favourite,
+        initialConfiguration = Config.Start,
         handleBackButton = true,
         childFactory = ::child
     )
@@ -77,10 +79,23 @@ class DefaultRootComponent @AssistedInject constructor(
                 )
                 RootComponent.Child.Search(component)
             }
+
+            Config.Start -> {
+                val component = startFactory.create(
+                    onClickedGoToFavourite = {
+                        navigation.push(Config.Favourite)
+                    },
+                    componentContext = componentContext
+                )
+                RootComponent.Child.Start(component)
+            }
         }
     }
 
     sealed interface Config : Parcelable {
+
+        @Parcelize
+        data object Start: Config
 
         @Parcelize
         data object Favourite : Config

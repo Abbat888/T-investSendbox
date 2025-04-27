@@ -5,12 +5,15 @@ import com.arkivanov.decompose.value.Value
 import ru.skorobogatov.t_investsendbox.presentation.details.DetailsComponent
 import ru.skorobogatov.t_investsendbox.presentation.favourite.FavouriteComponent
 import ru.skorobogatov.t_investsendbox.presentation.search.SearchComponent
+import ru.skorobogatov.t_investsendbox.presentation.start.StartComponent
 
 interface RootComponent {
 
     val stack: Value<ChildStack<*, Child>>
 
     sealed interface Child{
+
+        data class Start(val component: StartComponent): Child
 
         data class Favourite(val component: FavouriteComponent): Child
 

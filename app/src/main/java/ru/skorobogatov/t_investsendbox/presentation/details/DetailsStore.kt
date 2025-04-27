@@ -313,49 +313,4 @@ class DetailsStoreFactory @Inject constructor(
             }
         }
     }
-
-    private fun getLimit(timeframe: Timeframe): Int{
-        val limit = when(timeframe){
-            Timeframe.CANDLE_INTERVAL_1_MIN -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_2_MIN -> {
-                1200
-            }
-            Timeframe.CANDLE_INTERVAL_3_MIN -> {
-                750
-            }
-            Timeframe.CANDLE_INTERVAL_5_MIN -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_15_MIN -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_10_MIN -> {
-                1200
-            }
-            Timeframe.CANDLE_INTERVAL_30_MIN -> {
-                1200
-            }
-            Timeframe.CANDLE_INTERVAL_HOUR -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_2_HOUR -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_4_HOUR -> {
-                700
-            }
-            Timeframe.CANDLE_INTERVAL_DAY -> {
-                2400
-            }
-            Timeframe.CANDLE_INTERVAL_WEEK -> {
-                300
-            }
-            Timeframe.CANDLE_INTERVAL_MONTH -> {
-                120
-            }
-        }
-        return limit
-    }
 }

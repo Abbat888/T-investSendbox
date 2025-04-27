@@ -6,6 +6,7 @@ import ru.skorobogatov.t_investsendbox.presentation.details.DetailsComponent
 import ru.skorobogatov.t_investsendbox.presentation.details.DetailsContent
 import ru.skorobogatov.t_investsendbox.presentation.favourite.FavouriteContent
 import ru.skorobogatov.t_investsendbox.presentation.search.SearchContent
+import ru.skorobogatov.t_investsendbox.presentation.start.StartContent
 import ru.skorobogatov.t_investsendbox.presentation.ui.theme.TinvestSendboxTheme
 
 @Composable
@@ -25,6 +26,10 @@ fun RootContent(
                 }
                 is RootComponent.Child.Search -> {
                     SearchContent(instance.component)
+                }
+
+                is RootComponent.Child.Start -> {
+                    StartContent(instance.component)
                 }
             }
         }

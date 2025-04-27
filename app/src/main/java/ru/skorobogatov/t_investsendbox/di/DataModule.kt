@@ -12,12 +12,14 @@ import ru.skorobogatov.t_investsendbox.data.local.db.FavouriteDatabase
 import ru.skorobogatov.t_investsendbox.data.local.db.FavouriteInstrumentsDao
 import ru.skorobogatov.t_investsendbox.data.network.api.ApiService
 import ru.skorobogatov.t_investsendbox.data.repository.FavouriteRepositoryImpl
+import ru.skorobogatov.t_investsendbox.data.repository.GetInfoRepositoryImpl
 import ru.skorobogatov.t_investsendbox.data.repository.PriceRepositoryImpl
 import ru.skorobogatov.t_investsendbox.data.repository.SearchRepositoryImpl
 import ru.skorobogatov.t_investsendbox.data.repository.TokenRepositoryImpl
 import ru.skorobogatov.t_investsendbox.data.settings.TokenInterface
 import ru.skorobogatov.t_investsendbox.data.settings.TokenManager
 import ru.skorobogatov.t_investsendbox.domain.repository.FavouriteRepository
+import ru.skorobogatov.t_investsendbox.domain.repository.GetInfoRepository
 import ru.skorobogatov.t_investsendbox.domain.repository.PriceRepository
 import ru.skorobogatov.t_investsendbox.domain.repository.SearchRepository
 import ru.skorobogatov.t_investsendbox.domain.repository.TokenRepository
@@ -37,6 +39,8 @@ interface DataModule {
     @[ApplicationScope Binds]
     fun bindTokenRepository(impl: TokenRepositoryImpl): TokenRepository
 
+    @[ApplicationScope Binds]
+    fun bindGetInfoRepository(impl: GetInfoRepositoryImpl): GetInfoRepository
 
     companion object {
 
