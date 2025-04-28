@@ -44,18 +44,6 @@ android {
     }
 }
 
-androidComponents {
-    val key = property("token")?.toString() ?: error(
-        "You should add token in gradle.properties"
-    )
-    onVariants { variant ->
-        variant.buildConfigFields.put(
-            "T_INVEST_SENDBOX_TOKEN",
-            BuildConfigField("String", "\"$key\"", "Token for T-invest API")
-        )
-    }
-}
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
